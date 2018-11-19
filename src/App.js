@@ -2,24 +2,37 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
+import LoginForm from './components/LoginForm'
+import RegisterForm from './components/RegisterForm'
+import PostList from './components/PostList'
+
+
+//로그인홈에 회원가입 버튼 만들기
+//회원가입 버튼 킅릭하면 회원가입 폼 보여주기
 class App extends Component {
+  constructor(props){
+    super(props)
+    //page ==='register'--> 회원가입 페이지
+    //page === 'past-list' ->게시물 목록 페이지
+    this.state={
+      page:'PostList'
+    }
+  }
+
+  handleRegisterPage(){
+   this.setState({ page: "register" }); 
+  }
+
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+       {this.state.page === 'login'?(
+          <LoginForm onRegister={() => this.handleRegisterPage()}/>
+       ) :this.state.page ==='register' ?(
+         <RegisterForm/>
+       ):this.state.page ==='PostList' ?(
+         <PostList/>
+       ):null}
       </div>
     );
   }
