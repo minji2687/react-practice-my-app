@@ -2,10 +2,19 @@ import React, { Component } from 'react'
 import api from '../api'
 
 export default class RegisterForm extends Component {
+    constructor(props) {
+      super(props)
+    
+      this.state = {
+          //현재 입력 필드에 입력된 사용자 이름/암호
+         username:'',
+         password:''
+      }
+    }
+    
     async handleSubmit(e){
         e.preventDefault()
-        const username= e.target.elements.username.value
-        const password= e.target.elements.password.value
+      const {username , password} = this.state
          //중복체크
         const {data:users} = await api.get('/users',{
             prams:{
@@ -21,21 +30,23 @@ export default class RegisterForm extends Component {
             username,
             password
         })
+
         localStorage.setItem('token',res.data.token)
 
     }
-
-
-  render() {
-    return (
-     <form onSubmit={ e => this.handleSubmit(e)}>
-         <h1>
-             회원가입
-         </h1>
-         <input type="text" name='username'/>
-         <input type="password" name='password'/>
-         <button>가입</button>
-     </form>
-    )
+  
+    handleFieldChange(e,name){
+        this.setState({
+            [name]:e.target.value
+        })
+    }
+      render() {
+      const {username,password} = this.state
+    return <form onSubmit={e => this.handleSubmit(e)}>
+        <h1>회원가입</h1>
+        <input type="text" name="username" value={username} onChange={e => this.handleFieldChange(e)} />
+        <input type="password" name="password" value={password} onChange={e => this.handleFieldChange(e)} />
+        <button>가입</button>
+      </form>;
   }
 }

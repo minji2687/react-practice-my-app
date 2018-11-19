@@ -15,7 +15,7 @@ class App extends Component {
     //page ==='register'--> 회원가입 페이지
     //page === 'past-list' ->게시물 목록 페이지
     this.state={
-      page:'PostList'
+      page:'register'
     }
   }
 
