@@ -18,16 +18,19 @@ export default class PostList extends Component {
             posts:res.data
         })
     }
+
+  
     
 
   render() {
       const {posts}= this.state
+      const {onPostDetailPage} = this.props
     return (
       <div>
         <h1>게시물 목록</h1>
         <ul>
             {posts.map(post=>(
-                <li key={post.id}>{post.title}</li>
+                <li key={post.id} onClick={()=>this.props.onPostDetailPage(post.id)}>{post.title}</li>
             ))}
         </ul>
       </div>

@@ -4,7 +4,8 @@ import './App.css';
 
 import LoginForm from './components/LoginForm'
 import RegisterForm from './components/RegisterForm'
-import PostList from './components/PostList'
+import PostList from "./components/PostList";
+import PostDetail from './components/PostDetail'
 
 
 //로그인홈에 회원가입 버튼 만들기
@@ -15,12 +16,21 @@ class App extends Component {
     //page ==='register'--> 회원가입 페이지
     //page === 'past-list' ->게시물 목록 페이지
     this.state={
-      page:'register'
+      page:'post-list',
+      //현제 보고있는 게시물의 Id s
+      postId:null
     }
   }
 
   handleRegisterPage(){
    this.setState({ page: "register" }); 
+  }
+
+  handlePostDetilPage(postId){
+    this.setState({
+      page:"post-detail",
+      postId
+    })
   }
 
   render() {
@@ -30,8 +40,10 @@ class App extends Component {
           <LoginForm onRegister={() => this.handleRegisterPage()}/>
        ) :this.state.page ==='register' ?(
          <RegisterForm/>
-       ):this.state.page ==='PostList' ?(
-         <PostList/>
+       ):this.state.page ==='post-list' ?(
+         <PostList onPostDetailPage={ postId => this.handlePostDetilPage(postId)}/>
+       ):this.state.page ==='post-detail'?(
+         <PostDetail postId={this.state.postId}/>
        ):null}
       </div>
     );

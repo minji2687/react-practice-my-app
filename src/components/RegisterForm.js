@@ -17,11 +17,12 @@ export default class RegisterForm extends Component {
       const {username , password} = this.state
          //중복체크
         const {data:users} = await api.get('/users',{
-            prams:{
+            params:{
                 username
             }
         })
-        if(users.length >0){
+        console.log(users)
+        if(users.length > 0){
             alert("이미 같은 이름이 사용중입니다")
             return
         }
@@ -42,10 +43,10 @@ export default class RegisterForm extends Component {
     }
       render() {
       const {username,password} = this.state
-    return <form onSubmit={e => this.handleSubmit(e)}>
+    return <form onSubmit={ e => this.handleSubmit(e)}>
         <h1>회원가입</h1>
-        <input type="text" name="username" value={username} onChange={e => this.handleFieldChange(e)} />
-        <input type="password" name="password" value={password} onChange={e => this.handleFieldChange(e)} />
+        <input type="text" name="username" value={username} onChange={e => this.handleFieldChange(e,'username')} />
+        <input type="password" name="password" value={password} onChange={e => this.handleFieldChange(e,'password')} />
         <button>가입</button>
       </form>;
   }
