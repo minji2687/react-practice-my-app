@@ -20,7 +20,7 @@ class App extends Component {
     //page === 'new-post-form'-->새 글 쓰기 페이지
     //page ==='edit-post-form' -->글 수정 페이지
     this.state={
-      page:'login',
+      page:'post-list',
       //현제 보고있는 게시물의 Id s
       postId:null
     }

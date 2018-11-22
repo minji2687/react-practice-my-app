@@ -13,23 +13,35 @@ export default class UserProvider extends Component {
       }
     }
     
+    async conponentDidMount(){
+        if(localStorage.getItem('token')){
+            await this.refreshUser()
+        }
+    }
 
-    async login(username,password) {
+    async login(username, password) {
         const res = await api.post('/users/login', {
             username,
             password
         })
         localStorage.setItem('token', res.data.token)
-        const res2 = await api.get('./me')
-        
+        await this.refreshUser()
+    }
+
+    async refreshUser(){
+        const res2 = await api.get('/me')
         this.setState({
-            id:res.data.id,
-            username:res2.data.username
+            id: res.data.id,
+            username: res2.data.username
         })
     }
+
+ 
+
     render() {
         const value ={
-            username: 'fast',
+            username: this.state.username,
+            id:this.state.id,
             login:this.login.bind(this)
         }
         return (
