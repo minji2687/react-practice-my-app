@@ -24,8 +24,18 @@ export default class UserProvider extends Component {
             username,
             password
         })
+        
         localStorage.setItem('token', res.data.token)
         await this.refreshUser()
+    }
+
+    logout(){
+        localStorage.removeItem('token')
+        this.setState({
+            id:null,
+            username:null
+        })
+        
     }
 
     async refreshUser(){
@@ -42,7 +52,8 @@ export default class UserProvider extends Component {
         const value ={
             username: this.state.username,
             id:this.state.id,
-            login:this.login.bind(this)
+            login:this.login.bind(this),
+            logout:this.logout.bind(this)
         }
         return (
             <div>
