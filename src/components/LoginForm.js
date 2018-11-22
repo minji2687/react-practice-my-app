@@ -1,6 +1,7 @@
 import React from 'react'
 import RegisterForm from './RegisterForm';
-import api from '../api'
+import {UserConsumer} from '../Context/UserContext'
+
 export default class LoginForm extends React.Component{
 
     constructor(props) {
@@ -10,24 +11,23 @@ export default class LoginForm extends React.Component{
     }
     
 
-    async handleSubmit(e){
-        e.preventDefault();
-        const username = this.usernameRef.current.value
-        const password = e.target.elements.password.value
-
-        const res = await api.post('/users/login', {
-            username,
-            password
-        })
-        localStorage.setItem('token', res.data.token)
-
-    }
+  
 
     render(){
 
         const {onRegister} = this.props
-        return <React.Fragment>
-            <form onSubmit={e => this.handleSubmit(e)}>
+        return (
+            <UserConsumer>
+
+            {({login})=>(
+        <React.Fragment>
+            <form onSubmit={e => 
+                {
+                    e.preventDefault()
+                    const username=e.target.elements.username.value
+                    const password = e.target.elements.username.value
+                    login(username,password)
+                }}>
               <h1>로그인</h1>
 
               <input ref={this.usernameRef} type="text" name="username" />
@@ -35,7 +35,11 @@ export default class LoginForm extends React.Component{
               <button>로그인</button>
             </form>
             <button onClick={() => onRegister()}>회원가입</button>
-          </React.Fragment>;
+
+          </React.Fragment>
+          )}
+        </UserConsumer>
+        )
     }
 
 }
