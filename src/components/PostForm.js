@@ -1,13 +1,18 @@
 import React, { Component } from 'react'
-import styles from './PostForm.module.scss'
+import s from './PostForm.module.scss'
+import classNames from 'classnames'
 
 export default class PostForm extends Component {
 
     render() {
+        const {editing}=this.props
+        const titleClass= classNames(s.titleInput,{
+            [s.editing]:editing
+        })
         return (
             <div>
                 <form onSubmit={e =>this.props.onSubmit(e)}>
-                    <input className={styles.titleInput} type="text" name="title" defaultValue={this.props.title}/>
+                    <input className={titleClass} type="text" name="title" defaultValue={this.props.title}/>
                     <textarea name="body" cols="30" rows="10" defaultValue={this.props.body}></textarea>
                     <button>전송</button>
                 </form>
