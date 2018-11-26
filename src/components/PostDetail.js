@@ -21,7 +21,9 @@ async componentDidMount(){
         body,
         userId
     })
+    
 }
+
 
   render() {
       const { postId, onEditPostFormPage} = this.props
