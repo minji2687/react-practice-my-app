@@ -1,18 +1,27 @@
 import React, { Component } from 'react'
-import { UserConsumer } from '../Context/UserContext';
 
-export default class Layout extends Component {
+import { UserConsumer ,widthUser } from '../contexts/UserContext'
+
+class Layout extends Component {
   render() {
+    const { onLoginFormPage ,username,logout } = this.props
     return (
       <div>
-          <div className="header">헤더</div>
-          <UserConsumer>
-                {({ username, logout }) => <React.Fragment><div>{username}</div><button onClick={logout}>로그아웃</button></React.Fragment>}
-          </UserConsumer>
-          <div>{this.props.title}</div>
-          {this.props.child}
-          <div className="footer">푸터</div>
+        <div className="header">
+          헤더
+              <div>{username}</div>
+              {username ? (
+                <button onClick={logout}>로그아웃</button>
+              ) : (
+                  <button onClick={onLoginFormPage}>로그인</button>
+                )}
+        </div>
+        <h1 className="title">{this.props.title}</h1>
+        {this.props.children}
+        <div className="foooter">푸터</div>
       </div>
     )
   }
 }
+
+export default widthUser(Layout)

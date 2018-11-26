@@ -1,41 +1,53 @@
-import React, { Component } from 'react'
-import api from '../api';
-import Layout from './Layout'
+import React, { Component } from "react";
+import api from "../api";
+import Layout from "./Layout";
+import { widthUser } from "../contexts/UserContext";
+import classNames from 'classnames'
+import'./PostList.scss'
 
 export default class PostList extends Component {
-    constructor(props) {
-      super(props)
-    
-      this.state = {
-          posts: [],
-         loading:false
+  constructor(props) {
+    super(props);
 
-      }
-    }
-    async componentDidMount(){
-        const res = await api.get('/posts')
-        console.log(res)
-        this.setState({
-            posts:res.data
-        })
-    }
+    this.state = {
+      posts: [],
+      loading: true
+    };
+  }
+  async componentDidMount() {
+    const res = await api.get("/posts");
+    console.log(res);
+    this.setState({
+      posts: res.data,
+      loading:false
 
-  
-    
+    });
+  }
 
   render() {
-      const {posts}= this.state
-      const {onPostDetailPage, onNewPostFormPage} = this.props
-    return (
-      <Layout title="게시물 목록">
-        <button onClick={() => onNewPostFormPage()}>새 글 쓰기</button>
-        <h1>게시물 목록</h1>
-        <ul>
-            {posts.map(post=>(
-                <li key={post.id} onClick={()=>this.props.onPostDetailPage(post.id)}>{post.title}</li>
-            ))}
-        </ul>
-      </Layout>
+    const { posts } = this.state;
+    const { onPostDetailPage, onNewPostFormPage, onLoginFormPage } = this.props;
+    const UpgradedLayout= widthUser(Layout)
+    const titleClass = classNames(
+      'PostList__title',
+      {
+        'PostList__title--loading':this.state.loading
+      }
     )
+    return <Layout title="게시물 목록" onLoginFormPage={onLoginFormPage}>
+    <div className="PostList">
+        <button onClick={() => onNewPostFormPage(onLoginFormPage)}>
+          새 글 쓰기
+        </button>
+        <h1 className={titleClass}>게시물 목록</h1>
+        <ul className="PostList__list">
+          {posts.map(post => (
+          <li className="PostList__item" key={post.id} onClick={() => onPostDetailPage(post.id)}>
+              {post.title}
+            </li>
+          ))}
+        </ul>
+        </div>
+      </Layout>;
   }
 }

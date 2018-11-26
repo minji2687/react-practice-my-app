@@ -4,6 +4,7 @@ import api from '../api'
 const { Provider, Consumer } = React.createContext()
 
 export default class UserProvider extends Component {
+    
     constructor(props) {
       super(props)
     
@@ -19,17 +20,22 @@ export default class UserProvider extends Component {
         }
     }
 
+
     async login(username, password) {
         const res = await api.post('/users/login', {
             username,
             password
         })
-        
+
         localStorage.setItem('token', res.data.token)
         await this.refreshUser()
+
+        this.props.onPostListPage();
     }
 
+
     logout(){
+        
         localStorage.removeItem('token')
         this.setState({
             id:null,
@@ -41,7 +47,7 @@ export default class UserProvider extends Component {
     async refreshUser(){
         const res2 = await api.get('/me')
         this.setState({
-            id: res.data.id,
+            id: res2.data.id,
             username: res2.data.username
         })
     }
@@ -62,9 +68,30 @@ export default class UserProvider extends Component {
         )
     }
 }
+function withSubscription(WrappedComponent) {
+    class WithSubscription extends React.Component {/* ... */ }
+    WithSubscription.displayName = `WithSubscription(${getDisplayName(WrappedComponent)})`;
+    return WithSubscription;
+}
 
+function getDisplayName(WrappedComponent) {
+    return WrappedComponent.displayName || WrappedComponent.name || 'Component';
+}
+
+function widthUser(WrappedComponent){
+     function widthUser(props){
+        return (
+            <Consumer>
+                {value => <WrappedComponent {...value} {...props} />}
+            </Consumer>
+        )
+    }
+    widthUser.displayName = 'widthUser(!!!)'
+    return widthUser
+}
 
 export {
     UserProvider,
-    Consumer as UserConsumer
+    Consumer as UserConsumer,
+    widthUser
 }

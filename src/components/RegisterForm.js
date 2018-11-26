@@ -16,12 +16,14 @@ export default class RegisterForm extends Component {
         e.preventDefault()
       const {username , password} = this.state
          //중복체크
+        console.log(users)
         const {data:users} = await api.get('/users',{
             params:{
                 username
             }
         })
-        console.log(users)
+       
+        
         if(users.length > 0){
             alert("이미 같은 이름이 사용중입니다")
             return
@@ -31,7 +33,7 @@ export default class RegisterForm extends Component {
             username,
             password
         })
-
+        // console.log(res);
         localStorage.setItem('token',res.data.token)
 
     }
