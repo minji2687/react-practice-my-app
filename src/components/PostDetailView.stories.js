@@ -5,7 +5,7 @@ import { action } from '@storybook/addon-actions';
 import { linkTo } from '@storybook/addon-links';
 
 import { Button, Welcome } from '@storybook/react/demo';
-import PostDetileView from './PostDetileView';
+import PostDetailView from './PostDetailView';
 
 
 storiesOf("PostDetailView", module)

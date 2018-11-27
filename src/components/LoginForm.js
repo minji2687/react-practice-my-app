@@ -3,6 +3,13 @@ import {UserConsumer, widthUser} from '../contexts/UserContext'
 import {Form} from 'semantic-ui-react'
 class LoginForm extends React.Component{
 
+  static defaultProps={
+    //사용자가 로그인 폼을 전송했을 떄 호출되는 함수
+    //usrname과 password를 인수를 받음
+    login:(username, password)=>{},
+    onRegister:()=>{}
+  }
+
     constructor(props) {
       super(props)
 

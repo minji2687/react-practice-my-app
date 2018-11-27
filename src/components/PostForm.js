@@ -4,6 +4,11 @@ import classNames from 'classnames'
 
 export default class PostForm extends Component {
 
+    static defaultProps={
+            //true 가 주어지면, 편집모드 스타일이 적용됨
+            editing: false
+        
+    }
     render() {
         const {editing}=this.props
         const titleClass= classNames(s.titleInput,{
@@ -20,3 +25,4 @@ export default class PostForm extends Component {
         )
     }
 }
+
