@@ -7,9 +7,13 @@ import { linkTo } from '@storybook/addon-links';
 import { Button, Welcome } from '@storybook/react/demo';
 import PostForm from './PostForm'
 
-storiesOf('PostForm', module)
-.add('default', () =><PostForm/> )
-.add('editing', () =><PostForm editing={true}/>)
+const actions ={
+    onSubmit:action('onSubmit')
+}
+
+storiesOf("PostForm", module)
+  .add("default", () => <PostForm {...actions} />)
+  .add("editing", () => <PostForm {...actions} onSubmit={linkTo('PostDetailView')} editing={true} />);
 
 
 
